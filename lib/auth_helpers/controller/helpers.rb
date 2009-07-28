@@ -59,5 +59,6 @@ module AuthHelpers
         end
 
     end
-  endend
+  end
+end
 
