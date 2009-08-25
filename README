@@ -17,12 +17,16 @@ Authlogic also include some controllers to deal with the modules added. For
 example, if you add Recoverable to your model, you can have all password
 management for free, if you inherit from the Recoverable controller:
 
-  class AccountPasswordsController < AuthHelpers::Controller:Recoverable
+  class AccountPasswordsController < AuthHelpers::Controller::Recoverable
   end
 
 This functionality is powered by InheritedResources, which is available at:
 
   http://github.com/josevalim/inherited_resources
+
+You can see an example at:
+
+  http://github.com/josevalim/starter
 
 Installation
 ------------
