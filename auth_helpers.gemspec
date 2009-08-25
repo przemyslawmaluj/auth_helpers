@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name     = "auth_helpers"
-  s.version  = "0.4.1"
-  s.date     = "2009-05-23"
+  s.version  = "0.4.2"
+  s.date     = "2009-07-29"
   s.summary  = "AuthHelpers is a collection of modules to improve your Authlogic resources."
   s.email    = "jose.valim@gmail.com"
   s.homepage = "http://github.com/josevalim/auth_helpers"
@@ -34,4 +34,5 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README"]
   s.extra_rdoc_files = ["README"]
   s.add_dependency("authlogic")
+  s.add_dependency("josevalim-inherited_resources", ">= 0.9.0")
 end

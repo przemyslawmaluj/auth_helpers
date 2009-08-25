@@ -1,6 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-# Spec'ed controllers
 class AccountablePasswordsController < AuthHelpers::Controller::Recoverable
   layout nil
 end

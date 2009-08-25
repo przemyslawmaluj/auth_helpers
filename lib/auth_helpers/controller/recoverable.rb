@@ -13,30 +13,21 @@ module AuthHelpers
       # GET /account/password/new
       def new(&block)
         object = get_or_set_with_send(:new)
-        respond_to(:with => object, &block)
+        respond_with(object, &block)
       end
       alias :new! :new
 
       # POST /account/password
       # POST /account/password.xml
-      def create(&block)
+      def create(options={}, &block)
         object = get_or_set_with_send(:find_and_send_reset_password_instructions, params[self.instance_name])
-        respond_block, redirect_block = select_block_by_arity(block)
 
         if object.errors.empty?
           set_flash_message!(:notice, 'We sent instruction to reset your password, please check your inbox.')
-
-          respond_to_with_dual_blocks(true, block) do |format|
-            format.html { redirect_to_block_or_scope_to(redirect_block, :session) }
-            format.all  { head :ok }
-          end
+          respond_with_scoped_redirect(object, options, true, block)
         else
           set_flash_message!(:error)
-          options = { :with => object.errors, :status => :unprocessable_entity }
-
-          respond_to_with_dual_blocks(false, block, options) do |format|
-            format.html { render :action => 'new' }
-          end
+          respond_with_dual_blocks(object, options, false, block)
         end
       end
       alias :create! :create
@@ -45,30 +36,21 @@ module AuthHelpers
       def edit(&block)
         object = get_or_set_with_send(:new)
         object.perishable_token = params[self.instance_name].try(:fetch, :perishable_token)
-        respond_to(:with => object, &block)
+        respond_with(object, &block)
       end
       alias :edit! :edit
 
       # PUT /account/password
       # PUT /account/password.xml
-      def update(&block)
+      def update(options={}, &block)
         object = get_or_set_with_send(:find_and_reset_password, params[self.instance_name])
-        respond_block, redirect_block = select_block_by_arity(block)
 
         if object.errors.empty?
           set_flash_message!(:notice, 'Your password was successfully reset.')
-
-          respond_to_with_dual_blocks(true, block) do |format|
-            format.html { redirect_to_block_or_scope_to(redirect_block, :session) }
-            format.all  { head :ok }
-          end
+          respond_with_scoped_redirect(object, options, true, block)
         else
           set_flash_message!(:error)
-          options = { :with => object.errors, :status => :unprocessable_entity }
-
-          respond_to_with_dual_blocks(false, block, options) do |format|
-            format.html { render :action => 'edit' }
-          end
+          respond_with_dual_blocks(object, options, false, block)
         end
       end
       alias :update! :update

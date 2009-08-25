@@ -15,6 +15,7 @@ $:.unshift(RAILS_ROOT)
 ActionController::Base.view_paths = RAILS_ROOT
 require File.join(RAILS_ROOT, 'application')
 
+# gem 'josevalim-inherited_resources', '>= 0.9.0'
 require 'inherited_resources'
 require 'inherited_resources/base_helpers'
 
