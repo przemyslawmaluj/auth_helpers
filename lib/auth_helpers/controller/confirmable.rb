@@ -24,7 +24,9 @@ module AuthHelpers
 
         if object.errors.empty?
           set_flash_message!(:notice, 'We sent confirmation instructions to your email, please check your inbox.')
-          respond_with_scoped_redirect(object, options, true, block)
+          respond_with_dual_blocks(object, options, true, block) do |format|
+            format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
+          end
         else
           set_flash_message!(:error)
           respond_with_dual_blocks(object, options, false, block)
@@ -39,7 +41,9 @@ module AuthHelpers
 
         if object.errors.empty?
           set_flash_message!(:notice, '{{resource_name}} was successfully confirmed.')
-          respond_with_scoped_redirect(object, options, true, block)
+          respond_with_dual_blocks(object, options, true, block) do |format|
+            format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
+          end
         else
           set_flash_message!(:error, object.errors.on(:perishable_token))
           respond_with_dual_blocks(object, options, false, block) do |format|

@@ -58,14 +58,6 @@ module AuthHelpers
           instance_variable_get("@#{self.instance_name}") || instance_variable_set("@#{self.instance_name}", resource_class.send(*args))
         end
 
-        # Wraps around dual blocks with default behavior for html.
-        #
-        def respond_with_scoped_redirect(object, options, success, block)
-          respond_with_dual_blocks(object, options, success, block) do |format|
-            format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
-          end
-        end
-
     end
   end
 end
