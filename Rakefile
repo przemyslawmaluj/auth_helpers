@@ -15,6 +15,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.main     = "README"
   rdoc.rdoc_dir = "rdoc"
   rdoc.title    = "AuthHelpers"
+  rdoc.rdoc_files.include('[A-Z]*')
   rdoc.rdoc_files.include('lib/**/*.rb')
   rdoc.options << '--line-numbers' << '--inline-source'
 end
