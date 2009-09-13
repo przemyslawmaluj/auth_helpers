@@ -23,7 +23,10 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_resend_confirmation_instructions, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, 'We sent confirmation instructions to your email, please check your inbox.')
+          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.confirmations.create.notice',
+              :default => 'We sent confirmation instructions to your email, please check your inbox.',
+              :resource_name => '{{resource_name}}'))
+              
           respond_with_dual_blocks(object, options, true, block) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
@@ -40,7 +43,10 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_confirm, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, '{{resource_name}} was successfully confirmed.')
+          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.confirmations.show.notice',
+              :default => '{{resource_name}} was successfully confirmed.',
+              :resource_name => '{{resource_name}}'))
+              
           respond_with_dual_blocks(object, options, true, block) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
