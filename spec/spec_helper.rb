@@ -1,4 +1,5 @@
 require 'rubygems'
+gem 'test-unit', '1.2.3' # If test-unit 2.0.0+ is installed (and loaded), specs don't run.
 require 'ruby-debug'
 
 RAILS_ENV = 'test'
@@ -15,7 +16,7 @@ $:.unshift(RAILS_ROOT)
 ActionController::Base.view_paths = RAILS_ROOT
 require File.join(RAILS_ROOT, 'application')
 
-# gem 'josevalim-inherited_resources', '>= 0.9.0'
+gem 'josevalim-inherited_resources', '>= 0.9.0'
 require 'inherited_resources'
 require 'inherited_resources/base_helpers'
 
