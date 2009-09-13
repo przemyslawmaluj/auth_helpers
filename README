@@ -140,6 +140,21 @@ with the following contents:
     end
   end
 
+== Asynchronous notifications
+
+Notification e-mails are by default delivered synchronously by ActionMailer, but in most cases the delay caused by direct processing is just a drawback. Instead an e-mail can be sent into a delivery job queue for delayed processing, and the user won't even notice except for a bit faster signup response - WIN-WIN. AuthHelpers don't have this built in because same pattern might be useful in your other project notifiers (and therefore could imply code duplication), so therefore you should use this excellent generic ActionMailer asynchronous delivery extension:
+
+http://github.com/grimen/delayed_job_mailer (enhanced version of the brain behind: http://github.com/andersondias/delayed_job_mailer)
+
+This triggers ActionMailer to always put all type of e-mail deliveries as database backed delayed jobs (i.e. will not be lost upon server issues) - handled by DelayedJob (http://github.com/tobi/delayed_job). All you need to do (except of install the gem/plugin and it's dependencies - straight forward):
+
+  # config/initializers/action_mailer.rb
+  ActionMailer::Base.class_eval do
+    include Delayed::Mailer
+  end
+
+..and you got synchronous mail delivery.
+
 I18n
 ----
 
