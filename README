@@ -153,7 +153,7 @@ This triggers ActionMailer to always put all type of e-mail deliveries as databa
     include Delayed::Mailer
   end
 
-..and you got synchronous mail delivery.
+..and you got asynchronous mail delivery.
 
 I18n
 ----
