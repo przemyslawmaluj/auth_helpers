@@ -1,6 +1,7 @@
 module AuthHelpers
   module Controller
     class Confirmable < ::ApplicationController
+      
       unloadable
 
       include ::InheritedResources::BaseHelpers
@@ -23,16 +24,16 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_resend_confirmation_instructions, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.confirmations.create.notice',
+          set_flash_message!(:success, I18n.t('actionmailer.auth_helpers.confirmations.create.notice',
               :default => 'We sent confirmation instructions to your email, please check your inbox.',
               :resource_name => '{{resource_name}}'))
               
-          respond_with_dual_blocks(object, options, true, block) do |format|
+          respond_with_dual_blocks(object, options) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
         else
-          set_flash_message!(:error)
-          respond_with_dual_blocks(object, options, false, block)
+          set_flash_message!(:failure)
+          respond_with_dual_blocks(object, options, &block)
         end
       end
       alias :create! :create
@@ -43,16 +44,16 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_confirm, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.confirmations.show.notice',
+          set_flash_message!(:success, I18n.t('actionmailer.auth_helpers.confirmations.show.notice',
               :default => '{{resource_name}} was successfully confirmed.',
               :resource_name => '{{resource_name}}'))
               
-          respond_with_dual_blocks(object, options, true, block) do |format|
+          respond_with_dual_blocks(object, options) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
         else
           set_flash_message!(:error, object.errors.on(:perishable_token))
-          respond_with_dual_blocks(object, options, false, block) do |format|
+          respond_with_dual_blocks(object, options) do |format|
             format.html { render :action => "new" }
           end
         end

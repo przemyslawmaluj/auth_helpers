@@ -23,16 +23,16 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_send_reset_password_instructions, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.passwords.create.notice',
+          set_flash_message!(:success, I18n.t('actionmailer.auth_helpers.passwords.create.notice',
               :default => 'We sent instruction to reset your password, please check your inbox.',
               :resource_name => '{{resource_name}}'))
               
-          respond_with_dual_blocks(object, options, true, block) do |format|
+          respond_with_dual_blocks(object, options) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
         else
-          set_flash_message!(:error)
-          respond_with_dual_blocks(object, options, false, block)
+          set_flash_message!(:failure)
+          respond_with_dual_blocks(object, options, &block)
         end
       end
       alias :create! :create
@@ -51,16 +51,16 @@ module AuthHelpers
         object = get_or_set_with_send(:find_and_reset_password, params[self.instance_name])
 
         if object.errors.empty?
-          set_flash_message!(:notice, I18n.t('actionmailer.auth_helpers.passwords.update.notice',
+          set_flash_message!(:success, I18n.t('actionmailer.auth_helpers.passwords.update.notice',
               :default => 'Your password was successfully reset.',
               :resource_name => '{{resource_name}}'))
               
-          respond_with_dual_blocks(object, options, true, block) do |format|
+          respond_with_dual_blocks(object, options) do |format|
             format.html { redirect_to(options[:location] || url_by_name_and_scope(:session)) }
           end
         else
-          set_flash_message!(:error)
-          respond_with_dual_blocks(object, options, false, block)
+          set_flash_message!(:failure)
+          respond_with_dual_blocks(object, options, &block)
         end
       end
       alias :update! :update
