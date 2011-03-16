@@ -32,7 +32,7 @@ module AuthHelpers
         self.confirmed_at = nil
         self.confirmation_sent_at = Time.now.utc
         self.save(false)
-        AuthHelpers::Notifier.send(:"deliver_#{on}_confirmation", self)
+        AuthHelpers::Notifier.send(:"#{on}_confirmation", self).deliver
       end
 
       module ClassMethods
