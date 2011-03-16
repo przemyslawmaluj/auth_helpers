@@ -45,8 +45,7 @@ module AuthHelpers
         @bcc           = self.class.bcc
         @sent_on       = Time.now.utc
         @headers       = {}
-        @body[:record] = record
-        @body[record.class.name.downcase] = record
+        @record        = record
       end
 
   end
