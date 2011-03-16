@@ -14,7 +14,7 @@ module AuthHelpers
   #   AuthHelpers::Notifier.content_type = 'text/html'
   #
   class Notifier < ActionMailer::Base
-    class << self; attr_accessor :sender, :content_type end
+    class << self; attr_accessor :sender, :content_type, :bcc end
 
     def create_confirmation(record)
       @subject = I18n.t 'actionmailer.auth_helpers.create_confirmation', :default => 'Create confirmation'
@@ -42,6 +42,7 @@ module AuthHelpers
         @from          = self.class.sender
         @content_type  = self.class.content_type
         @recipients    = record.email
+        @bcc           = self.class.bcc
         @sent_on       = Time.now.utc
         @headers       = {}
         @body[:record] = record
