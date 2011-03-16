@@ -31,7 +31,7 @@ module AuthHelpers
         self.reset_perishable_token
         self.confirmed_at = nil
         self.confirmation_sent_at = Time.now.utc
-        self.save(false)
+        self.save(:validate => false)
         AuthHelpers::Notifier.send(:"#{on}_confirmation", self).deliver
       end
 
